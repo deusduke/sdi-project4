@@ -102,13 +102,18 @@ var ddlib = function () {
         return num.toFixed(numTrailing);
     };
 
+    var stringToNum = function(str) {
+        return Number(str);
+    }
+
     return {
         "isPhoneNumber" : isPhoneNumber,
         "isEmail" : isEmail,
         "isUrl" : isUrl,
         "toTitle": toTitle,
         "changeDelimiter": changeDelimiter,
-        "toSetDecimal" : toSetDecimal
+        "toSetDecimal" : toSetDecimal,
+        "stringToNum" : toSetDecimal,
     };
 };
 
@@ -148,6 +153,11 @@ lm(lib.changeDelimiter('1,2,3,4,5,6', ',', '|'), "1|2|3|4|5|6");
 
 lm("", "");
 lm("-- test set decimal", '');
-lm(lib.toSetDecimal(2.34, 2), 2.34);
-lm(lib.toSetDecimal(2.34, 3), 2.340);
-lm(lib.toSetDecimal(2.34, 4), 2.3400);
+lm(lib.toSetDecimal(2.34, 1), "2.3");
+lm(lib.toSetDecimal(2.34, 2), "2.34");
+lm(lib.toSetDecimal(2.34, 3), "2.340");
+lm(lib.toSetDecimal(2.34, 4), "2.3400");
+
+lm("", "");
+lm("-- test string to number", '');
+lm(lib.stringToNum("999") === 999, true);
