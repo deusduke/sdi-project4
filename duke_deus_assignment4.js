@@ -94,6 +94,8 @@ var ddlib = function () {
         for(var i = 0; i < items.length; ++i) {
             retval +=  i == 0 ? items[i] : new_delim + items[i];
         }
+
+        return retval;
     };
 
     return {
@@ -114,27 +116,27 @@ var lm = function (msg, val) {
 lm("Everything following should match (true to true, false to false, string to string) if all tests pass");
 
 lm("", "");
-lm("test phone num", '');
+lm("-- test phone num", '');
 lm(lib.isPhoneNumber("123-456-7890"), true);
 lm(lib.isPhoneNumber("123 456-7890"), false);
 lm(lib.isPhoneNumber("123-4567890"), false);
 
 lm("", "");
-lm("test email", '');
+lm("-- test email", '');
 lm(lib.isEmail("deusduke@fullsail.edu"), true);
 lm(lib.isEmail("deusdukefullsail.edu"), false);
 lm(lib.isEmail("deusduke@fullsail."), false);
 
 lm("", "");
-lm("test url", '');
-lm(lib.isEmail("http://test.com"), true);
-lm(lib.isEmail("https://test.com"), true);
-lm(lib.isEmail("test.com"), false);
+lm("-- test url", '');
+lm(lib.isUrl("http://test.com"), true);
+lm(lib.isUrl("https://test.com"), true);
+lm(lib.isUrl("test.com"), false);
 
 lm("", "");
-lm("test title", '');
+lm("-- test title", '');
 lm(lib.toTitle("test of a title case"), "Test Of  A Title Case");
 
 lm("", "");
-lm("test change delimiter", '');
+lm("-- test change delimiter", '');
 lm(lib.changeDelimiter('1,2,3,4,5,6', ',', '|'), "1|2|3|4|5|6");
