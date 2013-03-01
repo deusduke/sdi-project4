@@ -98,12 +98,17 @@ var ddlib = function () {
         return retval;
     };
 
+    var toSetDecimal = function(num, numTrailing) {
+        return num.toFixed(numTrailing);
+    };
+
     return {
         "isPhoneNumber" : isPhoneNumber,
         "isEmail" : isEmail,
         "isUrl" : isUrl,
         "toTitle": toTitle,
-        "changeDelimiter": changeDelimiter
+        "changeDelimiter": changeDelimiter,
+        "toSetDecimal" : toSetDecimal
     };
 };
 
@@ -140,3 +145,9 @@ lm(lib.toTitle("test of a title case"), "Test Of  A Title Case");
 lm("", "");
 lm("-- test change delimiter", '');
 lm(lib.changeDelimiter('1,2,3,4,5,6', ',', '|'), "1|2|3|4|5|6");
+
+lm("", "");
+lm("-- test set decimal", '');
+lm(lib.toSetDecimal(2.34, 2), 2.34);
+lm(lib.toSetDecimal(2.34, 3), 2.340);
+lm(lib.toSetDecimal(2.34, 4), 2.3400);
