@@ -13,16 +13,13 @@ var ddlib = function () {
         // ie. ###-###-####
         for (var i = 0; i < testNum.length; i++) {
             // pos. 3 & 7 should be dashes
-            if (i == 0 || i == 4) {
+            if (i == 3 || i == 7) {
                 if (testNum.charAt(i) != '-') return false;
-            }
-
-            else {
                 continue;
             }
 
             // else it should be a number
-            if(isNan(parseInt(testNum.charAt(i), 10))) {
+            else if(isNaN(parseInt(testNum.charAt(i), 10))) {
                 return false;
             }
         }
@@ -39,7 +36,11 @@ var ddlib = function () {
         var atSymFound = false;
         var periodFound = false;
 
-        for(var c in testEmail.split('')) {
+        var chars = testEmail.split('');
+
+        for(var i = 0; i < chars.length; ++i) {
+            var c = chars[i];
+
             // we need to make sure that there is a char after the period to validate
             // which is why this is at the top
             if (atSymFound && periodFound) return true;         
@@ -53,7 +54,7 @@ var ddlib = function () {
         }
 
         // at this point, we know that it is not an email
-        if (!atSymFound && periodFound) return false;
+        return false;
     };
 
     var isUrl = function (testUrl) {
@@ -74,8 +75,8 @@ var ddlib = function () {
 
         // loop through and uppercase the first char
         for(var i = 0; i < words.length; ++i) {
-            var word = (word.substring(0, 1).toUpperCase() +
-                        word.substring(1, word.length));
+            var word = (words[i].substring(0, 1).toUpperCase() +
+                        words[i].substring(1, words[i].length));
 
             retval += i == 0 ? word : " " + word;
         }
@@ -104,44 +105,36 @@ var ddlib = function () {
     };
 };
 
-var lib = ddlib;
+var lib = ddlib();
 
-var lm = function (msg) {
-    console.log(msg);
+var lm = function (msg, val) {
+    console.log(msg, val);
 }
 
-lm("Everything following should say true if all tests pass");
+lm("Everything following should match (true to true, false to false, string to string) if all tests pass");
 
-lm(ddlib.length);
+lm("", "");
+lm("test phone num", '');
+lm(lib.isPhoneNumber("123-456-7890"), true);
+lm(lib.isPhoneNumber("123 456-7890"), false);
+lm(lib.isPhoneNumber("123-4567890"), false);
 
-// test phone num
-lm(ddlib.isPhoneNumber("123-456-7890") == true);
-lm(ddlib.isPhoneNumber("123 456-7890" == false));
-lm(ddlib.isPhoneNumber("123-4567890" == false));
+lm("", "");
+lm("test email", '');
+lm(lib.isEmail("deusduke@fullsail.edu"), true);
+lm(lib.isEmail("deusdukefullsail.edu"), false);
+lm(lib.isEmail("deusduke@fullsail."), false);
 
-// test email
-lm(ddlib.isEmail("deusduke@fullsail.edu") == true);
-lm(ddlib.isEmail("deusdukefullsail.edu" == false));
-lm(ddlib.isEmail("deusduke@fullsail." == false));
+lm("", "");
+lm("test url", '');
+lm(lib.isEmail("http://test.com"), true);
+lm(lib.isEmail("https://test.com"), true);
+lm(lib.isEmail("test.com"), false);
 
-// test url
-lm(ddlib.isEmail("http://test.com") == true);
-lm(ddlib.isEmail("https://test.com") == true);
-lm(ddlib.isEmail("test.com") == false);
+lm("", "");
+lm("test title", '');
+lm(lib.toTitle("test of a title case"), "Test Of  A Title Case");
 
-// test title
-lm(ddlib.toTitle("test of a title case") == "Test Of  A Title Case");
-
-// test change delimiter
-lm(changeDelimiter('1,2,3,4,5,6', ',', '|') == "1|2|3|4|5|6");
-
-var ninjaLibrary = function () {
-    // TODO: add some private variables here
-    var throwingStars, toeShoes;
-    // TODO: add some private methods here
-    var signal = function (message) {};
-    // TODO: reveal the public methods here
-    return {
-        "signal" : signal
-    };
-};
+lm("", "");
+lm("test change delimiter", '');
+lm(lib.changeDelimiter('1,2,3,4,5,6', ',', '|'), "1|2|3|4|5|6");
