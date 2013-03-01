@@ -113,7 +113,7 @@ var ddlib = function () {
         "toTitle": toTitle,
         "changeDelimiter": changeDelimiter,
         "toSetDecimal" : toSetDecimal,
-        "stringToNum" : toSetDecimal,
+        "stringToNum" : stringToNum
     };
 };
 
